@@ -33,6 +33,7 @@ class ProcessDataController extends Controller
     public function create()
     {
         
+
       if(Schema::hasTable('emi_details')) 
        {
 
@@ -58,7 +59,7 @@ class ProcessDataController extends Controller
                 {
                  $table->id();
                  $table->string('clientid');
-                           try {
+                
 
             $min_date =  loan_detail::all('first_payment_date')->min('first_payment_date');
             $max_date =  loan_detail::all('last_payment_date')->max('last_payment_date');                          
@@ -73,42 +74,40 @@ class ProcessDataController extends Controller
                    foreach ($period as $dt) {
                       $table->string($dt->format("Y_M"))->nullable();
                     }
-
-    } catch (Throwable $e) {
-        return abort(404);
-    }                
-                });
+});
 
 
-// save data  1.get seed data
-// 2.get coluem belong to inser 
+        $sdk = loan_detail::all();
+
+        foreach($sdk as $sdks){
 
 
 
-            $sdk = loan_detail::all();
-            foreach($sdk as $sdks){
+            $omin_date =  $sdks->first_payment_date;
+            $omax_date =  $sdks->last_payment_date;                          
 
-            $min_date =  $sdks->min('first_payment_date');
-            $max_date =  $sdks->max('last_payment_date');                          
+            $ostart    = new DateTime($omin_date);
+            $ostart->modify('first day of this month');
+            $oend      = new DateTime($omax_date);
+            $oend->modify('first day of next month');
+            $ointerval = DateInterval::createFromDateString('1 month');
+            $operiod   = new DatePeriod($ostart, $ointerval, $oend);
 
-            $start    = new DateTime($min_date);
-            $start->modify('first day of this month');
-            $end      = new DateTime($max_date);
-            $end->modify('first day of next month');
-            $interval = DateInterval::createFromDateString('1 month');
-            $period   = new DatePeriod($start, $interval, $end);
+            $pdata = array('clientid' => $sdks->clientid);
 
-                    pdata = array('clientid'=>'51')
-                   foreach($period as $dt) {
-                     echo $dt->format("Y_M"). $sdks->loan_amount ;
+                  
+                   foreach($operiod as $dts) {
+                      
+                   // $pdata[ $dts->format("Y_M") ] = $sdks->loan_amount ;
+                    $dev = $sdks->loan_amount / $sdks->num_of_payment;
+                    $pdata[ $dts->format("Y_M") ] = $dev ;
                     }
 
-                  DB::table('emi_details')->insert($pdata);
+                 $rdata = DB::table('emi_details')->insert($pdata);
     }
+    return back();
 
-       // back
-       return back();
-       
+   
        }
     }
 
@@ -131,7 +130,8 @@ class ProcessDataController extends Controller
      */
     public function show(ProcessData $processData)
     {
-        //
+       $data = DB::table('emi_details')->all();
+        return view('show',compact('data'));
     }
 
     /**

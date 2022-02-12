@@ -25,6 +25,8 @@ Route::get('/ProcessData', [ProcessDataController::class,'index'])->name('proces
 
 Route::post('/ProcessData', [ProcessDataController::class,'create'])->name('ProcessData') ;
 
+Route::get('/show', [ProcessDataController::class,'show'])->name('show');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
