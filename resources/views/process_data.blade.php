@@ -13,10 +13,23 @@
                        @csrf
                       <input type="submit" name="" value="process data" class="btn btn-sm btn-primary">
                   </form>
+                   
+                   @if(isset($data))
+                      <table style="width:100%">
+        <tr>
+            <th>clientid</th>
+        </tr>
+    @foreach( $data as $datas )
+        <tr>
+            <td>{{ $datas->clientid }}</td>
+        </tr>
+    @endforeach
 
-                  @isset($data)
-                  {{$data}}
-                  @endisset
+    </table>
+    }
+
+@endif
+             
                     
                 </div>
             </div>

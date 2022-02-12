@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Repository\ProcessDataRepository;
+use App\Repository\ProcessDataEloquent;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+               $this->app->bind(ProcessDataRepository::class ,ProcessDataEloquent::class);
     }
 }

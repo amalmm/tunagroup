@@ -23,9 +23,7 @@ Route::get('/', function () {
 Route::get('/loan_detail', [LoanDetailController::class,'index'])->name('loan_detail') ;
 Route::get('/ProcessData', [ProcessDataController::class,'index'])->name('process_data') ;
 
-Route::post('/ProcessData', [ProcessDataController::class,'create'])->name('ProcessData') ;
-
-Route::get('/show', [ProcessDataController::class,'show'])->name('show');
+Route::post('/ProcessData', [ProcessDataController::class,'store'])->name('ProcessData') ;
 
 Auth::routes();
 
