@@ -52,7 +52,10 @@ class ProcessDataController extends Controller
 
         $data =  $this->pdr->TableAllData();
 
-        return view('/process_data',compact('data'));
+        $column =  $this->pdr->TableAllColumn();
+
+
+        return view('/process_data',compact('data','column'));
     }
 
     /**

@@ -20,6 +20,11 @@ public function TableAllData(){
    return  DB::table('emi_details')->get();
 }
 
+public function TableAllColumn(){
+   
+   return Schema::getColumnListing('emi_details');
+}
+
 public function TableExistDrop()
 {
    if(Schema::hasTable('emi_details')){
@@ -71,7 +76,7 @@ public function TableInsertData()
            			 $pdata = array('clientid' => $sdks->clientid);
                    foreach($operiod as $dts) {
                	  	   $dev = $sdks->loan_amount / $sdks->num_of_payment;
-                 	   $pdata[ $dts->format("Y_M") ] = $dev ;
+                 	   $pdata[ $dts->format("Y_M") ] =  $dev ;
                     }
 
                  $rdata = DB::table('emi_details')->insert($pdata);
