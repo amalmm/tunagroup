@@ -13,6 +13,7 @@ class ProcessDataController extends Controller
      
        public function __construct(ProcessDataRepository $pdr)
     {
+        $this->middleware('auth');
        $this->pdr = $pdr;
     }
     /**
