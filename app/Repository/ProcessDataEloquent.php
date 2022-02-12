@@ -69,7 +69,7 @@ public function TableInsertData()
             $ostart    = new DateTime($omin_date);
             $ostart->modify('first day of this month');
             $oend      = new DateTime($omax_date);
-            $oend->modify('first day of next month');
+            $oend->modify('first day of this month');
             $ointerval = DateInterval::createFromDateString('1 month');
             $operiod   = new DatePeriod($ostart, $ointerval, $oend);
 
